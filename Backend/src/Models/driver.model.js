@@ -15,32 +15,33 @@ const driverSchema = new mongoose.Schema({
         minlength : [4 , "Email must be equal or greater than 4 characters.."]
     },
 
+    password : {
+        type : String,
+        required : true,
+        minLength : [4 , "Password must be atleast 4 character long.."]
+    },
+
     phoneNumber : {
         type : Number,
         required : true,
-        minLength : [10 , "Your phone number must be atleast 10 digits long.."],
-        maxLength : [10 , "Your phone number must be 10 digits long.."]
+        minLength : [10 , "Invalid Phone number !!"],
+        maxLength : [10 , "Invalid Phone number !!"]
     },
 
     gender : {
         type : String,
         required : true,
-        enum : ["male" , "female" , "other"]
+        enum : ["Male" , "Female" , "Other"]
     },
 
     Address : {
         type : String,
-        required : true
-    },
-
-    pinCode : {
-        type : Number,
-        required : true
+        required : [true , "Avatar must be required.."]
     },
 
     avatar : {
         type : String,
-        required : true
+        required : [true , "Avatar must be required"]
     }
 
 });
