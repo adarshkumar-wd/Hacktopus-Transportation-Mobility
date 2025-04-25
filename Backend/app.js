@@ -11,7 +11,9 @@ app.use(express.urlencoded());
 app.use(express.json())
 app.use(cookieParser());
 
-app.get("/" , (req , res) => {
-    res.send("hello world");
-})
+// ROUTES...
+
+import userRoute from './src/routes/user.route.js'
+
+app.use("/api/users" , userRoute);
 

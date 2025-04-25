@@ -10,5 +10,7 @@ export const dbConnect = async () => {
         console.log("Db connected Successfully")
     } catch (error) {
         console.log("DB Connection error : " , error);
+        throw new Error(error);
+        
     }
 }

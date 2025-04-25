@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
     password : {
         type : String,
         required : true,
-        minLength : [4 , "Password must be atleast 4 character long.."]
+        minLength : [4 , "Password must be atleast 4 characters long.."]
     },
 
     phoneNumber : {
@@ -52,8 +52,6 @@ const userSchema = new mongoose.Schema({
 
 });
 
-export const userModel = mongoose.model("user" , userSchema);
-
 userSchema.pre("save" , async function () {
     this.password = await bcrypt.hash(this.password , 10);
 });
@@ -65,3 +63,5 @@ userSchema.methods.checkPassword = async function (inputPassword) {
 userSchema.methods.generateAccessToken = function () {
     return jwt.sign({ id: this._id }, process.env.USER_JWT_SECRET, { expiresIn: '1h' });
 };
+
+export const userModel = mongoose.model("user" , userSchema);
