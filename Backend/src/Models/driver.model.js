@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const driverSchema = new mongoose.Schema({
 
@@ -47,3 +49,15 @@ const driverSchema = new mongoose.Schema({
 });
 
 export const driverModel = mongoose.model("driver" , driverSchema);
+
+driverSchema.pre("save", async function () {
+    this.password = await bcrypt.hash(this.password, 10);
+});
+
+driverSchema.methods.checkPassword = async function (inputPassword) {
+    return await bcrypt.compare(inputPassword, this.password);
+};
+
+driverSchema.methods.generateAccessToken = function () {
+    return jwt.sign({ id: this._id }, process.env.DRIVER_JWT_SECRET, { expiresIn: '1h' });
+};
