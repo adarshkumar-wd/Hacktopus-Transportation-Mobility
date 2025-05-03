@@ -2,49 +2,67 @@ import mongoose from 'mongoose';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+
 const driverSchema = new mongoose.Schema({
 
-    name : {
-        type : String,
-        required : [true , "Name is required"],
-        minLength : [4 , "Name should be equal or greater than 4 characters"]
+  mobileNumber: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+
+  isMobileVerified: {
+    type: Boolean,
+    default: false,
+  },
+
+  profile: {
+
+    firstName: {
+      type: String,
+      required: true,
     },
 
-    email : {
-        type : String,
-        required : true,
-        unique : [true , "email must be unique..."],
-        minlength : [4 , "Email must be equal or greater than 4 characters.."]
+    lastName: {
+      type: String,
+      required: true,
     },
 
-    password : {
-        type : String,
-        required : true,
-        minLength : [4 , "Password must be atleast 4 character long.."]
+    dateOfBirth: {
+      type: Date,
+      required: true,
     },
 
-    phoneNumber : {
-        type : Number,
-        required : true,
-        minLength : [10 , "Invalid Phone number !!"],
-        maxLength : [10 , "Invalid Phone number !!"]
+    gender: {
+      type: String,
+      enum: ["Male", "Female", "Other"],
+      required: true,
     },
 
-    gender : {
-        type : String,
-        required : true,
-        enum : ["Male" , "Female" , "Other"]
+  },
+
+  identityVerification: {
+    documentType: {
+      type: String,
+      enum: ["Aadhar Card", "PAN Card"],
     },
 
-    Address : {
-        type : String,
-        required : [true , "Avatar must be required.."]
+    documentFile: {
+      type: String, // File URL or path
     },
 
-    avatar : {
-        type : String,
-        required : [true , "Avatar must be required"]
-    }
+  },
+
+  termsAccepted: {
+    type: Boolean,
+    default: false,
+  },
+
+  registrationStatus: {
+    type: String,
+    enum: ["Pending", "Under Review", "Approved", "Rejected"],
+    default: "Pending",
+  }
 
 });
 

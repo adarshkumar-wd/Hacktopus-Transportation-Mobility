@@ -1,36 +1,41 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-const vechicleSchema = new mongoose.Schema({
+const vehicleSchema = new mongoose.Schema({
 
-     driver : {
-        type : mongoose.Types.ObjectId,
-        ref : "driver",
-        required : true,
-     },
-
-     name : {
-        type : String,
-        required : true,
-     },
-
-     company : {
-        type : String,
-        required : true
-     },
-
-     number : {
-        type : String,
-        required : true,
-        unique : true,
-        minLength : [4 , "Vechicle number should contain 4 or more than 4 digits.."]
-     },
-
-     vechicleImage : [
-        {
-            type : String
-        }
-     ]
-
+   driver : {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'driver', // Reference to the driver model  
+    required: true,
+  },
+  
+  type: {
+    type: String, // e.g., Car, Bike, Auto
+    required: true,
+  },
+  
+  ownership: {
+    type: String,
+    enum: ['Self-Owned', 'Rented'],
+    required: true,
+  },
+  
+  registrationNumber: {
+    type: String,
+    required: true,
+  },
+  
+  drivingLocations: {
+    cities: [String],
+    areas: [String],
+    manualEntry: [String], // Optional manual city/area
+  },
+  
+  license: {
+    licenseNumber: String,
+    expirationDate: Date,
+    licenseFile: String, // File path or URL from Cloudinary
+  },
+  
 });
 
-export const vechiclemodel = mongoose.model("vechicle" , vechicleSchema); 
+export const vechiclemodel = mongoose.model("vechicle" , vehicleSchema); 
